@@ -46,5 +46,5 @@ def get_next_pair() -> tuple[int, int] | None:
     counts = get_comparison_count_per_event()
 
     chosen = min(remaining, key=lambda p: _pair_score(p, counts))
-    a, b = sorted(chosen)
-    return (a, b)
+
+    return tuple(sorted(chosen))
