@@ -1,4 +1,4 @@
-import { fetchTileConfig, fetchAllEvents, fetchNextPair, submitComparison } from './api.js';
+import { fetchTileConfig, fetchAllEvents, fetchNextPair, submitComparison, releaseLock } from './api.js';
 import { renderEventCard } from './eventCardRenderer.js';
 import { setTotalPairsFromEventCount, updateProgressBar } from './progressTracker.js';
 import { showCompletionScreen, openComparisonsModal, closeComparisonsModal } from './comparisonsModal.js';
@@ -9,6 +9,12 @@ var tileConfig = null;
 var currentPair = null;
 
 document.addEventListener('DOMContentLoaded', initializeApplication);
+
+window.addEventListener('beforeunload', () => {
+    if (currentPair && !currentPair.done && currentPair.event_a && currentPair.event_b) {
+        releaseLock(currentPair.event_a.id, currentPair.event_b.id);
+    }
+});
 
 async function initializeApplication() {
     try {

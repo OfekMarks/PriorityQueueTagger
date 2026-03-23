@@ -28,3 +28,15 @@ export async function submitComparison(winnerId, loserId) {
     });
     return response.json();
 }
+
+export function releaseLock(eventAId, eventBId) {
+    // Fire-and-forget, keepalive ensures the browser doesn't cancel it when the tab closes
+    fetch(`${API_BASE_URL}/release-lock`, {
+        method: 'POST',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event_a: eventAId, event_b: eventBId }),
+    }).catch(() => {
+        // Silently fail if server is down during tab close
+    });
+}

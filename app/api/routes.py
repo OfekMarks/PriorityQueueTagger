@@ -10,6 +10,7 @@ from app.models.database import (
     get_event_with_entities,
     add_comparison,
     get_all_comparisons,
+    unlock_pair,
 )
 from app.engine.comparison import get_next_pair
 from app.engine.tiles import get_tile_config
@@ -23,6 +24,11 @@ router = APIRouter(prefix="/api")
 class CompareRequest(BaseModel):
     winner_id: int
     loser_id: int
+
+
+class ReleaseLockRequest(BaseModel):
+    event_a: int
+    event_b: int
 
 
 # ---- Endpoints ------------------------------------------------------------
@@ -73,8 +79,16 @@ def submit_comparison(body: CompareRequest):
     if get_event_with_entities(body.loser_id) is None:
         raise HTTPException(status_code=404, detail=f"Event {body.loser_id} not found")
 
+    unlock_pair(body.winner_id, body.loser_id)
     comp_id = add_comparison(body.winner_id, body.loser_id)
     return {"id": comp_id, "winner_id": body.winner_id, "loser_id": body.loser_id}
+
+
+@router.post("/release-lock")
+def release_lock(body: ReleaseLockRequest):
+    """Release a lock on a pair immediately."""
+    unlock_pair(body.event_a, body.event_b)
+    return {"status": "ok"}
 
 
 @router.get("/comparisons")

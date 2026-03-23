@@ -54,6 +54,14 @@ def init_db() -> None:
                 FOREIGN KEY (winner_id) REFERENCES events(id),
                 FOREIGN KEY (loser_id)  REFERENCES events(id)
             );
+            CREATE TABLE IF NOT EXISTS pair_locks (
+                event_a    INTEGER NOT NULL,
+                event_b    INTEGER NOT NULL,
+                expires_at TEXT    NOT NULL,
+                PRIMARY KEY (event_a, event_b),
+                FOREIGN KEY (event_a) REFERENCES events(id),
+                FOREIGN KEY (event_b) REFERENCES events(id)
+            );
         """
         )
         conn.commit()
@@ -195,6 +203,54 @@ def get_event_ids() -> list[int]:
     try:
         rows = conn.execute("SELECT id FROM events ORDER BY id").fetchall()
         return [r["id"] for r in rows]
+    finally:
+        conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Pair Locking queries
+# ---------------------------------------------------------------------------
+
+
+def lock_pair(event_a: int, event_b: int, duration_minutes: int = 5) -> None:
+    """Lock a pair to prevent it from being served to another user."""
+    conn = get_connection()
+    try:
+        conn.execute(
+            """
+            INSERT OR REPLACE INTO pair_locks (event_a, event_b, expires_at)
+            VALUES (?, ?, datetime('now', '+' || ? || ' minutes'))
+            """,
+            (event_a, event_b, duration_minutes),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def unlock_pair(event_a: int, event_b: int) -> None:
+    """Release a lock on a pair."""
+    conn = get_connection()
+    try:
+        conn.execute(
+            "DELETE FROM pair_locks WHERE (event_a = ? AND event_b = ?) OR (event_a = ? AND event_b = ?)",
+            (event_a, event_b, event_b, event_a),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def get_locked_pairs() -> set[frozenset[int]]:
+    """Return all currently active locked pairs."""
+    conn = get_connection()
+    try:
+        # Automatically clean up expired locks whenever this is called
+        conn.execute("DELETE FROM pair_locks WHERE datetime('now') > expires_at")
+        conn.commit()
+
+        rows = conn.execute("SELECT event_a, event_b FROM pair_locks").fetchall()
+        return {frozenset((r["event_a"], r["event_b"])) for r in rows}
     finally:
         conn.close()
 

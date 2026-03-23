@@ -12,6 +12,8 @@ from app.models.database import (
     get_event_ids,
     get_compared_pairs,
     get_comparison_count_per_event,
+    get_locked_pairs,
+    lock_pair,
 )
 
 
@@ -38,7 +40,8 @@ def get_next_pair() -> tuple[int, int] | None:
 
     all_pairs = {frozenset(p) for p in combinations(event_ids, 2)}
     compared = get_compared_pairs()
-    remaining = all_pairs - compared
+    locked = get_locked_pairs()
+    remaining = all_pairs - compared - locked
 
     if not remaining:
         return None
@@ -46,5 +49,6 @@ def get_next_pair() -> tuple[int, int] | None:
     counts = get_comparison_count_per_event()
 
     chosen = min(remaining, key=lambda p: _pair_score(p, counts))
-
-    return tuple(sorted(chosen))
+    a, b = sorted(chosen)
+    lock_pair(a, b, 5)  # Lock for 5 minutes
+    return (a, b)
