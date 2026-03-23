@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Priority Queue Tagger — pairwise event comparison tool for geospatial events">
+    <title>Priority Queue Tagger</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1>Priority Queue Tagger</h1>
+            <p class="subtitle">Compare events pairwise to build an importance ordering</p>
+        </div>
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span class="progress-text" id="progressText"></span>
+    </header>
+
+    <!-- Main comparison area -->
+    <main class="comparison-container" id="comparisonContainer">
+        <!-- Event A card -->
+        <div class="event-card" id="cardA">
+            <div class="card-header">
+                <span class="card-label">Event A</span>
+                <h2 class="event-name" id="nameA"></h2>
+            </div>
+            <div class="map-container" id="mapA"></div>
+            <div class="entity-list" id="entitiesA"></div>
+            <button class="choose-btn" id="chooseA" onclick="submitChoice('A')">
+                <span class="btn-icon">★</span> More Important
+            </button>
+        </div>
+
+        <!-- VS divider -->
+        <div class="vs-divider">
+            <span>VS</span>
+        </div>
+
+        <!-- Event B card -->
+        <div class="event-card" id="cardB">
+            <div class="card-header">
+                <span class="card-label">Event B</span>
+                <h2 class="event-name" id="nameB"></h2>
+            </div>
+            <div class="map-container" id="mapB"></div>
+            <div class="entity-list" id="entitiesB"></div>
+            <button class="choose-btn" id="chooseB" onclick="submitChoice('B')">
+                <span class="btn-icon">★</span> More Important
+            </button>
+        </div>
+    </main>
+
+    <!-- Done screen -->
+    <div class="done-screen" id="doneScreen" style="display:none;">
+        <div class="done-content">
+            <div class="done-icon">✓</div>
+            <h2>All Done!</h2>
+            <p>Every pair of events has been compared.</p>
+            <button class="done-btn" onclick="viewComparisons()">View Comparisons</button>
+        </div>
+    </div>
+
+    <!-- Comparisons modal -->
+    <div class="modal-overlay" id="comparisonsModal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>All Comparisons</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="comparisonsBody"></div>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Loading events…</p>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+    <!-- App JS -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
