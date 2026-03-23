@@ -6,7 +6,6 @@ Strategy: least-compared-first, skipping already-compared pairs.
 
 from __future__ import annotations
 
-import random
 from itertools import combinations
 
 from app.models.database import (
@@ -14,6 +13,11 @@ from app.models.database import (
     get_compared_pairs,
     get_comparison_count_per_event,
 )
+
+
+def _pair_score(pair: frozenset[int], counts: dict[int, int]) -> int:
+    a, b = pair
+    return counts.get(a, 0) + counts.get(b, 0)
 
 
 def get_next_pair() -> tuple[int, int] | None:
@@ -27,7 +31,6 @@ def get_next_pair() -> tuple[int, int] | None:
       2. Subtract already-compared pairs.
       3. Among remaining pairs, pick the one where the sum of comparisons
          for both events is lowest (least-compared-first).
-      4. Break ties randomly.
     """
     event_ids = get_event_ids()
     if len(event_ids) < 2:
@@ -42,13 +45,6 @@ def get_next_pair() -> tuple[int, int] | None:
 
     counts = get_comparison_count_per_event()
 
-    def pair_score(pair: frozenset[int]) -> int:
-        a, b = pair
-        return counts.get(a, 0) + counts.get(b, 0)
-
-    min_score = min(pair_score(p) for p in remaining)
-    best_pairs = [p for p in remaining if pair_score(p) == min_score]
-
-    chosen = random.choice(best_pairs)
+    chosen = min(remaining, key=lambda p: _pair_score(p, counts))
     a, b = sorted(chosen)
     return (a, b)
