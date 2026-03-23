@@ -9,5 +9,5 @@ export function showLoadingOverlay() {
 export function hideLoadingOverlay() {
     var overlay = document.getElementById('loadingOverlay');
     overlay.classList.add('hidden');
-    setTimeout(function () { overlay.style.display = 'none'; }, LOADING_FADE_DURATION_MS);
+    setTimeout(() => { overlay.style.display = 'none'; }, LOADING_FADE_DURATION_MS);
 }

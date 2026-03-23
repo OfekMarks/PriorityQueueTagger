@@ -28,16 +28,16 @@ function createBaseMap(containerId, centerLatitude, centerLongitude, tileConfig)
 }
 
 function addGeoJsonFeatures(map, entities, color) {
-    const featureCollection = buildFeatureCollection(entities);
-    if (featureCollection.features.length === 0) {
+    if (entities.length === 0) {
         return;
     }
 
+    const featureCollection = buildFeatureCollection(entities);
     const geojsonLayer = L.geoJSON(featureCollection, {
         style: function () {
             return { color: color, weight: 2, fillOpacity: 0.2 };
         },
-        pointToLayer: function (feature, latitudeLongitude) {
+        pointToLayer: function (_, latitudeLongitude) {
             return L.circleMarker(latitudeLongitude, {
                 radius: 7,
                 fillColor: color,
@@ -60,7 +60,7 @@ function addGeoJsonFeatures(map, entities, color) {
 function buildFeatureCollection(entities) {
     return {
         type: 'FeatureCollection',
-        features: entities.map(function (entity) { return entity.geojson; }),
+        features: entities.map(entity => entity.geojson),
     };
 }
 
@@ -72,14 +72,13 @@ function fitMapToFeatures(map, geojsonLayer) {
 }
 
 function scheduleMapResize(map) {
-    setTimeout(function () { map.invalidateSize(); }, MAP_RESIZE_DELAY_MS);
+    setTimeout(() => map.invalidateSize(), MAP_RESIZE_DELAY_MS);
 }
 
 export function renderMap(containerId, event, tileConfig, color) {
     clearExistingMap(containerId);
 
-    const longitude = event.location.coordinates[0];
-    const latitude = event.location.coordinates[1];
+    const [longitude, latitude] = event.location.coordinates;
 
     const map = createBaseMap(containerId, latitude, longitude, tileConfig);
     addGeoJsonFeatures(map, event.entities, color);

@@ -21,7 +21,7 @@ export async function openComparisonsModal() {
 }
 
 function buildComparisonRows(comparisons) {
-    return comparisons.map(function (comparison, index) {
+    return comparisons.map((comparison, index) => {
         return '<div class="comparison-row">' +
             '<span class="comp-number">' + (index + 1) + '.</span>' +
             '<span class="comp-winner">' + comparison.winner_name + '</span>' +

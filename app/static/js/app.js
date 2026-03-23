@@ -71,7 +71,7 @@ async function submitChoice(side) {
 function animateButtonPress(side) {
     var button = document.getElementById('choose' + side);
     button.style.transform = 'scale(0.95)';
-    setTimeout(function () { button.style.transform = ''; }, BUTTON_FEEDBACK_DURATION_MS);
+    setTimeout(() => { button.style.transform = ''; }, BUTTON_FEEDBACK_DURATION_MS);
 }
 
 function viewComparisons() {
