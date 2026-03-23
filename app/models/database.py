@@ -144,7 +144,17 @@ def get_all_comparisons() -> list[dict[str, Any]]:
     conn = get_connection()
     try:
         rows = conn.execute(
-            "SELECT id, winner_id, loser_id, timestamp FROM comparisons ORDER BY id"
+            """
+            SELECT 
+                c.id, 
+                c.winner_id, w.name AS winner_name, 
+                c.loser_id, l.name AS loser_name, 
+                c.timestamp 
+            FROM comparisons c
+            JOIN events w ON c.winner_id = w.id
+            JOIN events l ON c.loser_id = l.id
+            ORDER BY c.id
+            """
         ).fetchall()
         return [dict(r) for r in rows]
     finally:

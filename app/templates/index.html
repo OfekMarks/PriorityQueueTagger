@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,7 @@
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-          crossorigin="">
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,7 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
     <!-- Header -->
     <header class="app-header">
@@ -95,10 +96,18 @@
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-            crossorigin=""></script>
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <!-- App JS -->
+    <!-- App JS (loaded in dependency order) -->
+    <script src="/static/js/constants.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/loadingOverlay.js"></script>
+    <script src="/static/js/mapRenderer.js"></script>
+    <script src="/static/js/entityListRenderer.js"></script>
+    <script src="/static/js/eventCardRenderer.js"></script>
+    <script src="/static/js/progressTracker.js"></script>
+    <script src="/static/js/comparisonsModal.js"></script>
     <script src="/static/js/app.js"></script>
 </body>
+
 </html>
