@@ -98,16 +98,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <!-- App JS (loaded in dependency order) -->
-    <script src="/static/js/constants.js"></script>
-    <script src="/static/js/api.js"></script>
-    <script src="/static/js/loadingOverlay.js"></script>
-    <script src="/static/js/mapRenderer.js"></script>
-    <script src="/static/js/entityListRenderer.js"></script>
-    <script src="/static/js/eventCardRenderer.js"></script>
-    <script src="/static/js/progressTracker.js"></script>
-    <script src="/static/js/comparisonsModal.js"></script>
-    <script src="/static/js/app.js"></script>
+    <!-- App Entry Point (loads as ES module) -->
+    <script type="module" src="/static/js/app.js"></script>
 </body>
 
 </html>

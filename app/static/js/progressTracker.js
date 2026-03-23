@@ -1,10 +1,12 @@
+import { fetchAllComparisons } from './api.js';
+
 var totalPairsCount = 0;
 
-function setTotalPairsFromEventCount(eventCount) {
+export function setTotalPairsFromEventCount(eventCount) {
     totalPairsCount = eventCount * (eventCount - 1) / 2;
 }
 
-async function updateProgressBar() {
+export async function updateProgressBar() {
     try {
         var comparisons = await fetchAllComparisons();
         var completedCount = comparisons.length;

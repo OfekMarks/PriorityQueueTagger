@@ -1,3 +1,10 @@
+import { fetchTileConfig, fetchAllEvents, fetchNextPair, submitComparison } from './api.js';
+import { renderEventCard } from './eventCardRenderer.js';
+import { setTotalPairsFromEventCount, updateProgressBar } from './progressTracker.js';
+import { showCompletionScreen, openComparisonsModal, closeComparisonsModal } from './comparisonsModal.js';
+import { showLoadingOverlay, hideLoadingOverlay } from './loadingOverlay.js';
+import { BUTTON_FEEDBACK_DURATION_MS } from './constants.js';
+
 var tileConfig = null;
 var currentPair = null;
 
@@ -29,7 +36,8 @@ async function loadAndDisplayNextPair() {
 
     var pairData = await fetchNextPair();
 
-    if (pairData.done) {
+    var isComparisonComplete = pairData.done;
+    if (isComparisonComplete) {
         showCompletionScreen();
         hideLoadingOverlay();
         return;
@@ -73,3 +81,8 @@ function viewComparisons() {
 function closeModal() {
     closeComparisonsModal();
 }
+
+// Expose handlers to global window object so HTML onclick attributes can reach them
+window.submitChoice = submitChoice;
+window.viewComparisons = viewComparisons;
+window.closeModal = closeModal;

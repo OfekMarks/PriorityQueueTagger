@@ -1,10 +1,13 @@
-function showCompletionScreen() {
+import { fetchAllComparisons } from './api.js';
+import { updateProgressBar } from './progressTracker.js';
+
+export function showCompletionScreen() {
     document.getElementById('comparisonContainer').style.display = 'none';
     document.getElementById('doneScreen').style.display = 'flex';
     updateProgressBar();
 }
 
-async function openComparisonsModal() {
+export async function openComparisonsModal() {
     var comparisons = await fetchAllComparisons();
     var modalBody = document.getElementById('comparisonsBody');
 
@@ -28,6 +31,6 @@ function buildComparisonRows(comparisons) {
     }).join('');
 }
 
-function closeComparisonsModal() {
+export function closeComparisonsModal() {
     document.getElementById('comparisonsModal').style.display = 'none';
 }

@@ -1,3 +1,5 @@
+import { DEFAULT_MAP_ZOOM, MAP_BOUNDS_PADDING, MAP_RESIZE_DELAY_MS } from './constants.js';
+
 const leafletInstances = {};
 
 function clearExistingMap(containerId) {
@@ -73,7 +75,7 @@ function scheduleMapResize(map) {
     setTimeout(function () { map.invalidateSize(); }, MAP_RESIZE_DELAY_MS);
 }
 
-function renderMap(containerId, event, tileConfig, color) {
+export function renderMap(containerId, event, tileConfig, color) {
     clearExistingMap(containerId);
 
     const longitude = event.location.coordinates[0];

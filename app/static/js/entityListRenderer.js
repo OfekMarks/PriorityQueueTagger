@@ -1,4 +1,6 @@
-function renderEntityList(containerElement, entities) {
+import { KNOWN_ENTITY_TYPES } from './constants.js';
+
+export function renderEntityList(containerElement, entities) {
     containerElement.innerHTML = '<h3>Entities (' + entities.length + ')</h3>';
 
     entities.forEach(function (entity) {
