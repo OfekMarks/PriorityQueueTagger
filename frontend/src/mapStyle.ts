@@ -1,4 +1,4 @@
-export const ENTITY_MARKERS = {
+export const ENTITY_MARKERS: Record<string, { color: string; icon: string }> = {
     building: { color: '#8b5cf6', icon: '🏢' },
     equipment: { color: '#f59e0b', icon: '⚙️' },
     area: { color: '#10b981', icon: '📍' },
@@ -7,7 +7,7 @@ export const ENTITY_MARKERS = {
     default: { color: '#9ca3af', icon: '🔹' }
 };
 
-export const MAPBOX_LAYERS = [
+export const MAPBOX_LAYERS: mapboxgl.Layer[] = [
     {
         id: 'entities-fill-building',
         type: 'fill',

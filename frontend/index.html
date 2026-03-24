@@ -42,7 +42,7 @@
             </div>
             <div class="map-container" id="mapA"></div>
             <div class="entity-list" id="entitiesA"></div>
-            <button class="choose-btn" id="chooseA" onclick="submitChoice('A')">
+            <button class="choose-btn" id="chooseA">
                 <span class="btn-icon">★</span> More Important
             </button>
         </div>
@@ -60,7 +60,7 @@
             </div>
             <div class="map-container" id="mapB"></div>
             <div class="entity-list" id="entitiesB"></div>
-            <button class="choose-btn" id="chooseB" onclick="submitChoice('B')">
+            <button class="choose-btn" id="chooseB">
                 <span class="btn-icon">★</span> More Important
             </button>
         </div>
@@ -72,7 +72,7 @@
             <div class="done-icon">✓</div>
             <h2>All Done!</h2>
             <p>Every pair of events has been compared.</p>
-            <button class="done-btn" onclick="viewComparisons()">View Comparisons</button>
+            <button class="done-btn" id="btnViewComparisons">View Comparisons</button>
         </div>
     </div>
 
@@ -81,7 +81,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>All Comparisons</h2>
-                <button class="modal-close" onclick="closeModal()">✕</button>
+                <button class="modal-close" id="btnCloseModal">✕</button>
             </div>
             <div class="modal-body" id="comparisonsBody"></div>
         </div>
@@ -97,7 +97,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
 
     <!-- App Entry Point (loads as ES module) -->
-    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./src/app.ts"></script>
 </body>
 
 </html>
