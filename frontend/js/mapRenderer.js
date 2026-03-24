@@ -48,4 +48,6 @@ export function renderMap(containerId, event, tileConfig) {
     
     // Force a resize calculation shortly after creation to prevent clipping in hidden containers
     setTimeout(() => map.resize(), 100);
+    
+    return map;
 }

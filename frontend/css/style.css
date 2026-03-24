@@ -182,7 +182,8 @@ body::before {
 /* ---- Map ---- */
 
 .map-container {
-    height: 280px;
+    height: 380px;
+    min-height: 380px;
     margin: 0 1rem;
     border-radius: var(--radius-sm);
     overflow: hidden;
@@ -193,7 +194,8 @@ body::before {
 
 .entity-list {
     padding: 1rem 1.5rem;
-    flex: 1;
+    max-height: 220px;
+    overflow-y: auto;
 }
 
 .entity-list h3 {
@@ -215,11 +217,13 @@ body::before {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.04);
     font-size: 0.85rem;
-    transition: background var(--transition);
+    cursor: pointer;
+    transition: background var(--transition), transform 0.2s;
 }
 
 .entity-item:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(4px);
 }
 
 .entity-icon {

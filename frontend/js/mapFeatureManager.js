@@ -44,7 +44,7 @@ function computeBounds(entities) {
     return bounds;
 }
 
-function extractBounds(bounds, geojson) {
+export function extractBounds(bounds, geojson) {
     const geomType = geojson.geometry.type;
     const coords = geojson.geometry.coordinates;
 

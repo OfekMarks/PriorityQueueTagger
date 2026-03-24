@@ -8,6 +8,6 @@ export function renderEventCard(side, event, tileConfig) {
     var entitiesContainer = document.getElementById('entities' + side);
 
     nameElement.textContent = event.name;
-    renderMap(mapContainerId, event, tileConfig);
-    renderEntityList(entitiesContainer, event.entities);
+    var map = renderMap(mapContainerId, event, tileConfig);
+    renderEntityList(entitiesContainer, event.entities, map);
 }
