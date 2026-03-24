@@ -5,6 +5,7 @@ To switch tile sources, change ACTIVE_PROVIDER below.
 The frontend fetches tile config from /api/tiles and never hardcodes a URL.
 """
 
+import os
 from dataclasses import dataclass
 
 
@@ -43,6 +44,9 @@ ACTIVE_PROVIDER: TileProvider = OSM_CDN
 def get_tile_config() -> dict:
     """Return the active tile provider config as a dict (sent to frontend)."""
     return {
+        "provider": "mapbox",
+        "token": os.getenv("MAPBOX_ACCESS_TOKEN", ""),
+        "style": "mapbox://styles/mapbox/dark-v11",
         "name": ACTIVE_PROVIDER.name,
         "url_template": ACTIVE_PROVIDER.url_template,
         "attribution": ACTIVE_PROVIDER.attribution,

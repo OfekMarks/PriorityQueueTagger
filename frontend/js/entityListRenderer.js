@@ -1,4 +1,4 @@
-import { KNOWN_ENTITY_TYPES } from './constants.js';
+import { ENTITY_MARKERS } from './mapStyle.js';
 
 export function renderEntityList(containerElement, entities) {
     containerElement.innerHTML = '<h3>Entities (' + entities.length + ')</h3>';
@@ -12,21 +12,14 @@ export function renderEntityList(containerElement, entities) {
 function createEntityElement(properties) {
     var name = (properties && properties.name) || 'Unnamed';
     var type = (properties && properties.type) || 'unknown';
-    var dotColorClass = getEntityDotClass(type);
+    var styleProps = ENTITY_MARKERS[type] || ENTITY_MARKERS.default;
 
     var element = document.createElement('div');
     element.className = 'entity-item';
     element.innerHTML =
-        '<span class="entity-dot ' + dotColorClass + '"></span>' +
+        '<span class="entity-icon" style="background-color: ' + styleProps.color + '">' + styleProps.icon + '</span>' +
         '<span class="entity-name">' + name + '</span>' +
         '<span class="entity-type">' + type + '</span>';
 
     return element;
-}
-
-function getEntityDotClass(entityType) {
-    if (KNOWN_ENTITY_TYPES.includes(entityType)) {
-        return entityType;
-    }
-    return 'default';
 }

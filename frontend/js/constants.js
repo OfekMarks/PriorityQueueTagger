@@ -3,8 +3,6 @@ export const SIDE_COLORS = {
     B: '#f43f5e',
 };
 
-export const KNOWN_ENTITY_TYPES = ['building', 'equipment', 'area', 'structure', 'infrastructure'];
-
 export const LOADING_FADE_DURATION_MS = 400;
 export const MAP_RESIZE_DELAY_MS = 100;
 export const BUTTON_FEEDBACK_DURATION_MS = 150;
