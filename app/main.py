@@ -5,6 +5,10 @@ Run with:
     uvicorn app.main:app --reload
 """
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 

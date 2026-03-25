@@ -6,6 +6,7 @@ dist/
 build/
 .venv/
 venv/
+.env
 
 # Data
 data/
@@ -21,3 +22,6 @@ Thumbs.db
 
 # Node
 node_modules/
+
+# Docker
+docker-compose.yml
