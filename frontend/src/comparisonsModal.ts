@@ -1,5 +1,4 @@
 import { fetchAllComparisons } from './api';
-import { updateProgressBar } from './progressTracker';
 import { CompletedComparison } from './types';
 
 export function showCompletionScreen(): void {
@@ -10,8 +9,6 @@ export function showCompletionScreen(): void {
         comparisonContainer.style.display = 'none';
     if (doneScreen)
         doneScreen.style.display = 'flex';
-
-    updateProgressBar();
 }
 
 export async function openComparisonsModal(): Promise<void> {

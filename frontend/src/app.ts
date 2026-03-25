@@ -1,6 +1,5 @@
 import { fetchTileConfig, fetchAllEvents, fetchNextPair, submitComparison, releaseLock } from './api';
 import { renderEventCard } from './eventCardRenderer';
-import { setTotalPairsFromEventCount, updateProgressBar } from './progressTracker';
 import { showCompletionScreen, openComparisonsModal, closeComparisonsModal } from './comparisonsModal';
 import { showLoadingOverlay, hideLoadingOverlay } from './loadingOverlay';
 import { BUTTON_FEEDBACK_DURATION_MS } from './constants';
@@ -28,7 +27,6 @@ async function initializeApplication(): Promise<void> {
     try {
         const initialData = await loadInitialData();
         tileConfig = initialData.tileConfig;
-        setTotalPairsFromEventCount(initialData.eventCount);
 
         await loadAndDisplayNextPair();
     } catch (error) {
@@ -62,7 +60,7 @@ async function loadAndDisplayNextPair(): Promise<void> {
         renderEventCard('A', pairData.event_a, tileConfig);
         renderEventCard('B', pairData.event_b, tileConfig);
     }
-    updateProgressBar();
+
     hideLoadingOverlay();
 }
 

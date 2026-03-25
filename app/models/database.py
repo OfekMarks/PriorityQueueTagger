@@ -181,23 +181,9 @@ def get_all_comparisons(*, data_base: Database) -> list[dict[str, Any]]:
 
 
 @inject_database
-def get_comparison_count_per_event(*, data_base: Database) -> dict[int, int]:
-    rows = data_base.execute_query(
-        """
-        SELECT event_id, SUM(cnt) as total FROM (
-            SELECT winner_id AS event_id, COUNT(*) AS cnt FROM comparisons GROUP BY winner_id
-            UNION ALL
-            SELECT loser_id  AS event_id, COUNT(*) AS cnt FROM comparisons GROUP BY loser_id
-        ) AS subquery GROUP BY event_id
-        """
-    )
-    return {r["event_id"]: r["total"] for r in rows}
-
-
-@inject_database
-def get_compared_pairs(*, data_base: Database) -> set[frozenset[int]]:
+def get_compared_pairs(*, data_base: Database) -> set[tuple[int, int]]:
     rows = data_base.execute_query("SELECT winner_id, loser_id FROM comparisons")
-    return {frozenset((r["winner_id"], r["loser_id"])) for r in rows}
+    return {(r["winner_id"], r["loser_id"]) for r in rows}
 
 
 @inject_database
@@ -232,12 +218,12 @@ def unlock_pair(event_a: int, event_b: int, *, data_base: Database) -> None:
 
 
 @inject_database
-def get_locked_pairs(*, data_base: Database) -> set[frozenset[int]]:
+def get_locked_pairs(*, data_base: Database) -> set[tuple[int, int]]:
     data_base.execute_query(
         "DELETE FROM pair_locks WHERE CURRENT_TIMESTAMP > expires_at", commit=True
     )
     rows = data_base.execute_query("SELECT event_a, event_b FROM pair_locks")
-    return {frozenset((r["event_a"], r["event_b"])) for r in rows}
+    return {(r["event_a"], r["event_b"]) for r in rows}
 
 
 @inject_database
